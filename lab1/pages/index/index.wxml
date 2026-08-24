@@ -1,0 +1,21 @@
+<!--pages/index/index.wxml-->
+<!-- 页面结构文件：负责"页面长什么样"，只定义元素，不写样式、不写逻辑 -->
+
+<!-- 页面容器：承载所有内容 -->
+<view class="container">
+
+  <!-- 文字区域：{{message}} 引用 index.js 中 data 的数据 -->
+  <view class="text">
+    {{message}}
+  </view>
+
+  <!-- 按钮：bindtap 绑定点击事件，点击后执行 index.js 中的 changeText -->
+  <button
+    class="change-button"
+    hover-class="change-button-hover"
+    bindtap="changeText"
+  >
+    点击改变文字
+  </button>
+
+</view>

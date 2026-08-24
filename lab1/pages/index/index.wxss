@@ -1,0 +1,60 @@
+/* pages/index/index.wxss */
+/* 页面样式文件：负责"页面好不好看"，为 wxml 中的元素设置外观 */
+
+/* 页面容器：占满全屏，内容整体居中 */
+.container {
+  height: 100vh;                    /* 占满屏幕高度 */
+  display: flex;                    /* 弹性布局 */
+  flex-direction: column;           /* 子元素纵向排列 */
+  align-items: center;              /* 水平居中 */
+  justify-content: center;          /* 垂直居中 */
+  padding-bottom: 200rpx;           /* 让内容整体略微靠上，视觉更舒服 */
+  background: linear-gradient(180deg, #eaf3ff 0%, #ffffff 100%); /* 浅蓝到白的渐变背景 */
+}
+
+/* 文字区域 */
+.text {
+  font-size: 72rpx;                 /* 大字体 */
+  font-weight: bold;                /* 加粗 */
+  color: #2b7cff;                   /* 醒目的蓝色 */
+  letter-spacing: 6rpx;             /* 字间距 */
+  margin-bottom: 120rpx;            /* 与按钮保持合理间距 */
+  text-shadow: 0 6rpx 16rpx rgba(43, 124, 255, 0.25); /* 淡淡的文字阴影 */
+  animation: fadeIn 1s ease;        /* 淡入动画：页面加载时文字淡入 */
+}
+
+/* 淡入动画：从透明 + 下方升起，变为完全不透明 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 按钮：圆角 + 渐变背景 */
+.change-button {
+  width: 340rpx;
+  height: 96rpx;
+  line-height: 96rpx;               /* 文字垂直居中 */
+  border-radius: 48rpx;             /* 圆角设计 */
+  font-size: 32rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #07c160, #03a85a); /* 绿色渐变背景 */
+  box-shadow: 0 10rpx 24rpx rgba(7, 193, 96, 0.35);      /* 立体阴影 */
+}
+
+/* 去掉小程序按钮默认的边框 */
+.change-button::after {
+  border: none;
+}
+
+/* 点击反馈效果：按下时按钮变深色并轻微缩小 */
+.change-button-hover {
+  background: linear-gradient(135deg, #06ad56, #02914c);
+  transform: scale(0.96);
+  box-shadow: 0 6rpx 12rpx rgba(7, 193, 96, 0.25);
+}
