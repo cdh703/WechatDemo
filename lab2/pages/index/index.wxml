@@ -1,0 +1,164 @@
+<!--index.wxml-->
+<navigation-bar title="DongHan Profile" back="{{false}}" color="#ffffff" background="{{navBg}}"></navigation-bar>
+
+<!-- 滚动进度条 -->
+<view class="progress-track">
+  <view class="progress-bar" style="{{progressStyle}}"></view>
+</view>
+
+<scroll-view class="scrollarea" scroll-y type="list" bindscroll="onScroll" show-scrollbar="{{false}}">
+  <view class="page">
+
+    <!-- 背景氛围光 -->
+    <view class="aurora aurora-a"></view>
+    <view class="aurora aurora-b"></view>
+    <view class="aurora aurora-c"></view>
+
+    <!-- 顶部：AI 个人名片头图 -->
+    <view class="banner reveal rd-0 {{animateList[0] ? 'in' : ''}}" id="card-0" bindtap="onBannerTap" hover-class="banner-hover">
+      <image class="banner-img" src="{{banner}}" mode="aspectFill" show-menu-by-longpress="{{true}}" />
+      <view class="banner-mask"></view>
+
+      <!-- 顶部呼吸状态点 -->
+      <view class="banner-status">
+        <view class="dot"></view>
+        <text>{{status}}</text>
+      </view>
+
+      <!-- 点击预览提示 -->
+      <view class="banner-hint">
+        <text>点击查看大图</text>
+      </view>
+
+      <!-- 装饰光斑 -->
+      <view class="glow glow-a"></view>
+      <view class="glow glow-b"></view>
+
+      <!-- 底部签名 -->
+      <view class="banner-foot">
+        <text class="banner-name">{{name}}</text>
+        <text class="banner-corner">DongHan · 2026</text>
+      </view>
+    </view>
+
+    <!-- 姓名区域 -->
+    <view class="hero reveal rd-1 {{animateList[1] ? 'in' : ''}}" id="card-1">
+      <view class="hero-name">{{name}}</view>
+      <view class="hero-meta">
+        <text class="meta-chip">{{major}}</text>
+        <text class="meta-chip">{{degree}}</text>
+      </view>
+      <view class="hero-line"></view>
+      <view class="hero-intro">{{intro}}</view>
+    </view>
+
+    <!-- 关于我 -->
+    <view class="card reveal rd-2 {{animateList[2] ? 'in' : ''}}" id="card-2" hover-class="card-hover">
+      <view class="card-head">
+        <view class="card-title">
+          <text class="title-bar"></text>
+          <text>关于我</text>
+        </view>
+        <text class="card-no">01</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">姓名</text>
+        <text class="info-value">{{about.name}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">专业</text>
+        <text class="info-value">{{about.major}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">方向</text>
+        <view class="info-tags">
+          <text wx:for="{{about.directions}}" wx:key="*this" class="info-tag">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 技能展示 -->
+    <view class="card reveal rd-3 {{animateList[3] ? 'in' : ''}}" id="card-3" hover-class="card-hover">
+      <view class="card-head">
+        <view class="card-title">
+          <text class="title-bar"></text>
+          <text>技能</text>
+        </view>
+        <text class="card-no">02</text>
+      </view>
+      <view class="skill-list">
+        <view wx:for="{{skills}}" wx:key="name" class="skill-item">
+          <view class="skill-top">
+            <text class="skill-name">{{item.name}}</text>
+            <view class="skill-right">
+              <text class="skill-level lv-{{item.cls}}">{{item.level}}</text>
+              <text class="skill-pct">{{item.pct}}%</text>
+            </view>
+          </view>
+          <view class="skill-bar">
+            <view class="skill-fill lv-{{item.cls}}" style="width: {{animateList[3] ? item.pct : 0}}%; transition-delay: {{index * 120}}ms;"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 项目经历时间线 -->
+    <view class="card reveal rd-4 {{animateList[4] ? 'in' : ''}}" id="card-4" hover-class="card-hover">
+      <view class="card-head">
+        <view class="card-title">
+          <text class="title-bar"></text>
+          <text>项目经历</text>
+        </view>
+        <text class="card-no">03</text>
+      </view>
+      <view class="timeline">
+        <view wx:for="{{timeline}}" wx:key="event" class="tl-item">
+          <view class="tl-node">
+            <view class="tl-dot"></view>
+            <text class="tl-no">{{item.no}}</text>
+          </view>
+          <view class="tl-content">
+            <text class="tl-year">{{item.year}}</text>
+            <text class="tl-event">{{item.event}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 兴趣展示 -->
+    <view class="card reveal rd-5 {{animateList[5] ? 'in' : ''}}" id="card-5" hover-class="card-hover">
+      <view class="card-head">
+        <view class="card-title">
+          <text class="title-bar"></text>
+          <text>兴趣</text>
+        </view>
+        <text class="card-no">04</text>
+      </view>
+      <view class="cloud">
+        <text wx:for="{{interests}}" wx:key="name" class="cloud-tag {{item.cls}}">{{item.name}}</text>
+      </view>
+    </view>
+
+    <!-- 底部联系卡片 -->
+    <view class="contact reveal rd-6 {{animateList[6] ? 'in' : ''}}" id="card-6" bindtap="onContactTap" hover-class="contact-hover">
+      <view class="contact-motto">{{contact.motto}}</view>
+      <view class="contact-row">
+        <text class="contact-key">邮箱</text>
+        <text class="contact-val">{{contact.email}}</text>
+        <text class="contact-copy">复制</text>
+      </view>
+      <view class="contact-row">
+        <text class="contact-key">城市</text>
+        <text class="contact-val">{{contact.location}}</text>
+      </view>
+    </view>
+
+    <!-- 底部 -->
+    <view class="footer">
+      <view class="footer-line"></view>
+      <button class="share-btn" open-type="share">分享名片</button>
+      <text class="footer-text">DongHan Profile · 陈东汉</text>
+    </view>
+
+  </view>
+</scroll-view>

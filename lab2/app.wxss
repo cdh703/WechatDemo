@@ -1,0 +1,50 @@
+/**app.wxss**/
+page {
+  background: linear-gradient(180deg, #0f2027 0%, #203a43 48%, #2c5364 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: #e8eef5;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 全局淡入动画：卡片依次浮入 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(36rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in {
+  animation: fadeInUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+
+/* 通用卡片：玻璃拟态 + 圆角 + 阴影 */
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1rpx solid rgba(255, 255, 255, 0.10);
+  border-radius: 28rpx;
+  padding: 32rpx 30rpx 34rpx;
+  margin-bottom: 28rpx;
+  box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, rgba(79, 172, 254, 0.6), transparent);
+}
+.card-hover {
+  transform: scale(0.98);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.32);
+}
