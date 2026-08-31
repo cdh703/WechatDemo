@@ -1,0 +1,158 @@
+<view class="masthead">
+  <view class="orb orb-one"></view>
+  <view class="orb orb-two"></view>
+  <view class="brand-row">
+    <view class="brand-mark">OUC</view>
+    <view class="brand-copy">
+      <text class="brand-name">中国海洋大学新闻</text>
+      <text class="brand-en">OCEAN UNIVERSITY NEWSROOM</text>
+    </view>
+    <view class="edition">
+      <text class="edition-number">{{allNewsList.length}}</text>
+      <text class="edition-label">今日聚合</text>
+    </view>
+  </view>
+
+  <view class="masthead-line">
+    <text>海纳百川 · 取则行远</text>
+    <text>校园官方资讯</text>
+  </view>
+
+  <swiper class="news-swiper" indicator-dots autoplay circular interval="5000" duration="650">
+    <swiper-item wx:for="{{swiperImg}}" wx:key="id" data-id="{{item.id}}" bindtap="goToDetail">
+      <image class="swiper-image" src="{{item.src}}" mode="aspectFill"></image>
+      <view class="swiper-shade"></view>
+      <view class="swiper-copy">
+        <view class="focus-row">
+          <text class="swiper-label">FOCUS</text>
+          <text class="focus-line"></text>
+          <text class="focus-tip">焦点新闻</text>
+        </view>
+        <text class="swiper-title">{{item.title}}</text>
+        <text class="read-more">阅读全文  →</text>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>
+
+<view class="content-shell">
+  <view class="search-panel">
+    <view class="search-box">
+      <view class="search-symbol"></view>
+      <input
+        class="search-input"
+        value="{{searchKeyword}}"
+        placeholder="搜索标题、人物或事件关键词"
+        placeholder-class="search-placeholder"
+        confirm-type="search"
+        bindinput="onSearchInput"
+      />
+      <text class="clear-search" wx:if="{{searchKeyword}}" bindtap="clearSearch">清除</text>
+    </view>
+    <view class="keyword-rail" wx:if="{{!searchKeyword}}">
+      <text class="keyword-label">热搜</text>
+      <scroll-view class="keyword-scroll" scroll-x enable-flex show-scrollbar="{{false}}">
+        <text
+          class="keyword-item"
+          wx:for="{{hotKeywords}}"
+          wx:key="*this"
+          data-keyword="{{item}}"
+          bindtap="selectKeyword"
+        >{{item}}</text>
+      </scroll-view>
+    </view>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x enable-flex show-scrollbar="{{false}}">
+    <view
+      class="category-chip {{activeCategory === item ? 'active' : ''}}"
+      wx:for="{{categories}}"
+      wx:key="*this"
+      data-category="{{item}}"
+      bindtap="selectCategory"
+    >{{item}}</view>
+  </scroll-view>
+
+  <view class="section-heading">
+    <view class="heading-title">
+      <text class="heading-en">LATEST</text>
+      <text class="heading-cn">海大要闻</text>
+    </view>
+    <view class="heading-actions">
+      <text class="news-count">{{resultCount}} 篇</text>
+      <view class="sort-switch">
+        <text
+          class="sort-option {{sortMode === 'latest' ? 'active' : ''}}"
+          data-mode="latest"
+          bindtap="selectSortMode"
+        >最新</text>
+        <text
+          class="sort-option {{sortMode === 'hot' ? 'active' : ''}}"
+          data-mode="hot"
+          bindtap="selectSortMode"
+        >热榜</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="news-feed" wx:if="{{newsList.length}}">
+    <block wx:for="{{newsList}}" wx:key="id">
+      <view
+        class="feature-card reveal-card"
+        wx:if="{{index === 0}}"
+        style="animation-delay: {{index * 80}}ms;"
+        data-id="{{item.id}}"
+        bindtap="goToDetail"
+      >
+        <view class="feature-image-wrap">
+          <image class="feature-image" src="{{item.poster}}" mode="aspectFill"></image>
+          <text class="feature-category">{{item.category}}</text>
+        </view>
+        <view class="feature-content">
+          <text class="feature-kicker">HEADLINE · 头条</text>
+          <text class="feature-title">{{item.title}}</text>
+          <text class="feature-summary">{{item.summary}}</text>
+          <view class="feature-meta">
+            <text>{{item.add_date}}</text>
+            <text class="meta-dot"></text>
+            <text>{{item.viewText}} 阅读</text>
+            <text class="feature-arrow">→</text>
+          </view>
+        </view>
+      </view>
+
+      <view
+        class="story-card reveal-card"
+        wx:else
+        style="animation-delay: {{index * 80}}ms;"
+        data-id="{{item.id}}"
+        bindtap="goToDetail"
+      >
+        <image class="story-image" src="{{item.poster}}" mode="aspectFill"></image>
+        <view class="story-content">
+          <view class="story-topline">
+            <text class="story-category">{{item.category}}</text>
+            <text class="story-index">0{{index + 1}}</text>
+          </view>
+          <text class="story-title">{{item.title}}</text>
+          <view class="story-meta">
+            <text>{{item.add_date}}</text>
+            <text>{{item.viewText}} 阅读</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="search-empty" wx:else>
+    <view class="empty-monogram">OUC</view>
+    <text class="search-empty-title">没有找到相关新闻</text>
+    <text class="search-empty-tip">换一个关键词或栏目试试</text>
+  </view>
+
+  <view class="editorial-footer">
+    <text class="footer-mark">OUC NEWS</text>
+    <text class="footer-line"></text>
+    <text class="footer-copy">记录海大 · 连接世界</text>
+  </view>
+</view>

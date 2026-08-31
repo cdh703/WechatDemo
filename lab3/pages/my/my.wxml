@@ -1,0 +1,327 @@
+<view class="profile-card">
+  <block wx:if="{{isLogin}}">
+    <view class="avatar-shell" bindtap="changeAvatar">
+      <image wx:if="{{userInfo.avatarUrl}}" class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view wx:else class="avatar placeholder">校</view>
+      <view class="avatar-edit-badge">{{avatarUploading ? '…' : '换'}}</view>
+    </view>
+    <view class="profile-info">
+      <view class="profile-title-row">
+        <text class="nickname">{{userInfo.nickName}}</text>
+        <button class="logout-button" bindtap="logout">退出登录</button>
+      </view>
+      <text class="profile-tip">{{userInfo.phoneLabel || '欢迎来到中国海洋大学新闻'}}</text>
+      <text class="avatar-upload-tip" bindtap="changeAvatar">{{avatarUploading ? '正在处理头像' : '点击头像更换照片'}}</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="avatar placeholder">校</view>
+    <view class="profile-info">
+      <text class="nickname">{{isAuthorizing ? '授权进行中' : '尚未登录'}}</text>
+      <text class="profile-tip">{{isAuthorizing ? '请在弹窗中确认授权信息' : '身份与数据，由你决定如何使用'}}</text>
+    </view>
+  </block>
+</view>
+
+<block wx:if="{{isLogin}}">
+  <view class="data-dashboard">
+    <view class="data-item" data-section="favorites" bindtap="switchSection">
+      <text class="data-value">{{favoriteCount}}</text>
+      <text class="data-label">收藏</text>
+    </view>
+    <view class="data-divider"></view>
+    <view class="data-item" data-section="history" bindtap="switchSection">
+      <text class="data-value">{{historyCount}}</text>
+      <text class="data-label">足迹</text>
+    </view>
+    <view class="data-divider"></view>
+    <view class="data-item" data-section="liked" bindtap="switchSection">
+      <text class="data-value">{{likedCount}}</text>
+      <text class="data-label">点赞</text>
+    </view>
+    <view class="data-divider"></view>
+    <view class="data-item" data-section="comments" bindtap="switchSection">
+      <text class="data-value">{{commentCount}}</text>
+      <text class="data-label">评论</text>
+    </view>
+  </view>
+
+  <view class="privacy-console">
+    <view class="console-head">
+      <view>
+        <text class="console-eyebrow">PRIVACY &amp; DATA</text>
+        <text class="console-title">隐私与数据控制台</text>
+      </view>
+      <view class="security-status">
+        <view class="status-dot"></view>
+        <text>已受保护</text>
+      </view>
+    </view>
+    <view class="console-grid">
+      <view class="console-action" bindtap="openPrivacyPolicy">
+        <text class="action-index">01</text>
+        <view class="action-copy">
+          <text class="action-title">隐私指引</text>
+          <text class="action-desc">查看信息使用范围</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </view>
+      <view class="console-action" bindtap="clearPersonalData">
+        <text class="action-index">02</text>
+        <view class="action-copy">
+          <text class="action-title">清理个人痕迹</text>
+          <text class="action-desc">删除本机行为数据</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </view>
+      <view class="console-action danger" bindtap="withdrawPrivacyConsent">
+        <text class="action-index">03</text>
+        <view class="action-copy">
+          <text class="action-title">撤回本地授权</text>
+          <text class="action-desc">退出并移除同意记录</text>
+        </view>
+        <text class="action-arrow">›</text>
+      </view>
+    </view>
+    <text class="consent-version">授权协议版本 v1.2 · 数据仅保存在当前设备</text>
+  </view>
+
+  <view class="section-tabs">
+    <view
+      class="section-tab {{activeSection === 'favorites' ? 'active' : ''}}"
+      data-section="favorites"
+      bindtap="switchSection"
+    >
+      <text>我的收藏</text>
+      <text class="section-count">{{favoriteCount}}</text>
+    </view>
+    <view
+      class="section-tab {{activeSection === 'history' ? 'active' : ''}}"
+      data-section="history"
+      bindtap="switchSection"
+    >
+      <text>最近浏览</text>
+      <text class="section-count">{{historyCount}}</text>
+    </view>
+    <view
+      class="section-tab {{activeSection === 'liked' ? 'active' : ''}}"
+      data-section="liked"
+      bindtap="switchSection"
+    >
+      <text>我的点赞</text>
+      <text class="section-count">{{likedCount}}</text>
+    </view>
+    <view
+      class="section-tab {{activeSection === 'comments' ? 'active' : ''}}"
+      data-section="comments"
+      bindtap="switchSection"
+    >
+      <text>评论</text>
+      <text class="section-count">{{commentCount}}</text>
+    </view>
+  </view>
+
+  <block wx:if="{{activeSection === 'favorites'}}">
+    <view class="news-list" wx:if="{{newsList.length}}">
+      <view
+        class="list-item"
+        wx:for="{{newsList}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="goToDetail"
+      >
+        <image class="list-item-image" src="{{item.poster}}" mode="aspectFill"></image>
+        <view class="list-item-info">
+          <text class="list-item-title">{{item.title}}</text>
+          <text class="list-item-date">{{item.add_date}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>还没有收藏新闻，去首页看看吧</view>
+  </block>
+
+  <block wx:elif="{{activeSection === 'history'}}">
+    <view class="news-list" wx:if="{{historyList.length}}">
+      <view
+        class="list-item"
+        wx:for="{{historyList}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="goToDetail"
+      >
+        <image class="list-item-image" src="{{item.poster}}" mode="aspectFill"></image>
+        <view class="list-item-info">
+          <text class="list-item-title">{{item.title}}</text>
+          <text class="list-item-date">浏览于 {{item.viewedText}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>还没有浏览记录</view>
+  </block>
+
+  <block wx:elif="{{activeSection === 'liked'}}">
+    <view class="news-list" wx:if="{{likedList.length}}">
+      <view
+        class="list-item"
+        wx:for="{{likedList}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="goToDetail"
+      >
+        <image class="list-item-image" src="{{item.poster}}" mode="aspectFill"></image>
+        <view class="list-item-info">
+          <text class="list-item-title">{{item.title}}</text>
+          <text class="list-item-date">点赞于 {{item.likedText}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>还没有点赞新闻</view>
+  </block>
+
+  <block wx:else>
+    <view class="comment-history" wx:if="{{commentList.length}}">
+      <view
+        class="comment-history-item"
+        wx:for="{{commentList}}"
+        wx:key="id"
+        data-id="{{item.articleId}}"
+        bindtap="goToDetail"
+      >
+        <view class="comment-history-head">
+          <text class="comment-article-title">{{item.articleTitle}}</text>
+          <text class="comment-history-time">{{item.createdText}}</text>
+        </view>
+        <text class="comment-history-content">{{item.content}}</text>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>还没有发表评论</view>
+  </block>
+</block>
+
+<view class="login-required" wx:else>
+  <view class="login-badge">SECURE ACCESS</view>
+  <text class="login-required-title">一键授权登录</text>
+  <text class="login-required-tip">点击蓝色按钮后，将依次确认头像昵称、手机号和测试号码。全部确认后直接进入个人中心。</text>
+
+  <view class="permission-flow single-flow">
+    <view class="flow-item">
+      <text class="flow-number">1</text>
+      <text class="flow-label">资料授权 → 手机验证</text>
+    </view>
+  </view>
+
+  <view class="data-scope">
+    <view class="scope-row">
+      <text class="scope-name">登录身份</text>
+      <text class="scope-value">本地“海大读者”</text>
+    </view>
+    <view class="scope-row">
+      <text class="scope-name">演示授权</text>
+      <text class="scope-value">头像昵称、手机号</text>
+    </view>
+    <view class="scope-row">
+      <text class="scope-name">真实资料</text>
+      <text class="scope-value">测试模式不读取</text>
+    </view>
+    <view class="scope-row">
+      <text class="scope-name">保存方式</text>
+      <text class="scope-value safe">仅当前设备</text>
+    </view>
+  </view>
+
+  <checkbox-group class="consent-check" bindchange="onConsentChange">
+    <label class="consent-label">
+      <checkbox value="agreed" checked="{{consentChecked}}" color="#034d91"></checkbox>
+      <text>我已阅读、理解并同意以下协议</text>
+    </label>
+  </checkbox-group>
+  <view class="policy-links">
+    <text bindtap="openPrivacyPolicy">《用户隐私保护指引》</text>
+    <text class="link-and">与</text>
+    <text bindtap="openServiceAgreement">《用户服务协议》</text>
+  </view>
+
+  <button
+    wx:if="{{consentChecked}}"
+    class="login-button {{consentChecked ? 'ready' : ''}}"
+    bindtap="startAuthorizationFlow"
+  >
+    <text>{{isAuthorizing ? '正在等待授权确认' : '开始授权并登录'}}</text>
+    <text class="login-arrow">→</text>
+  </button>
+  <button wx:else class="login-button" disabled>
+    <text>请先勾选协议</text>
+    <text class="login-arrow">→</text>
+  </button>
+  <view class="demo-login">
+    <view class="demo-dot"></view>
+    <text>课程测试模式 · 不读取微信真实资料</text>
+  </view>
+  <text class="login-footnote">你可以随时在“隐私与数据控制台”撤回本地授权</text>
+</view>
+
+<view class="policy-mask" wx:if="{{showPolicySheet}}" bindtap="closePolicySheet">
+  <view class="policy-sheet" catchtap="stopPropagation">
+    <view class="sheet-handle"></view>
+    <view class="sheet-head">
+      <view>
+        <text class="sheet-eyebrow">OUC NEWS · TRUST CENTER</text>
+        <text class="sheet-title">{{policyType === 'privacy' ? '用户隐私保护说明' : '用户服务协议'}}</text>
+      </view>
+      <view class="sheet-close" bindtap="closePolicySheet">×</view>
+    </view>
+
+    <block wx:if="{{policyType === 'privacy'}}">
+      <view class="policy-highlight">我们坚持最小必要原则：仅在你主动选择快捷登录时申请手机号验证，不读取微信头像和昵称。</view>
+      <view class="policy-section">
+        <text class="policy-number">01</text>
+        <view>
+          <text class="policy-title">申请什么</text>
+          <text class="policy-text">课程开发版使用明确标注的脱敏测试号码。登录后可主动从相册或相机选择头像，图片仅保存在当前设备。</text>
+        </view>
+      </view>
+      <view class="policy-section">
+        <text class="policy-number">02</text>
+        <view>
+          <text class="policy-title">如何保存</text>
+          <text class="policy-text">当前课程版本不上传服务器，仅保存手机号授权状态或脱敏测试号码；收藏、足迹、点赞和评论均保存在当前设备。</text>
+        </view>
+      </view>
+      <view class="policy-section">
+        <text class="policy-number">03</text>
+        <view>
+          <text class="policy-title">你的权利</text>
+          <text class="policy-text">你可以退出登录、撤回本地授权或清理个人痕迹。再次登录前，我们会重新征得你的同意。</text>
+        </view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="policy-highlight">本小程序为课程实验作品，用于展示高校新闻前端交互，不提供商业交易服务。</view>
+      <view class="policy-section">
+        <text class="policy-number">01</text>
+        <view>
+          <text class="policy-title">规范使用</text>
+          <text class="policy-text">请文明阅读与评论，不发布违法违规、侵权、虚假或与新闻无关的内容。</text>
+        </view>
+      </view>
+      <view class="policy-section">
+        <text class="policy-number">02</text>
+        <view>
+          <text class="policy-title">内容说明</text>
+          <text class="policy-text">新闻内容用于教学演示，正式发布与版权信息以中国海洋大学新闻网原页面为准。</text>
+        </view>
+      </view>
+      <view class="policy-section">
+        <text class="policy-number">03</text>
+        <view>
+          <text class="policy-title">协议更新</text>
+          <text class="policy-text">若信息用途发生变化，我们将更新协议版本并在再次登录时重新征得同意。</text>
+        </view>
+      </view>
+    </block>
+
+    <button class="sheet-confirm" bindtap="closePolicySheet">我已了解</button>
+  </view>
+</view>

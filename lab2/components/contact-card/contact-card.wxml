@@ -1,0 +1,17 @@
+<view
+  class="contact reveal rd-{{rd}} {{show ? 'in' : ''}}"
+  id="{{cid}}"
+  bindtap="onTap"
+  hover-class="contact-hover"
+>
+  <view class="contact-motto">{{contact.motto}}</view>
+  <view class="contact-row">
+    <text class="contact-key">邮箱</text>
+    <text class="contact-val">{{contact.email}}</text>
+    <text class="contact-copy">复制</text>
+  </view>
+  <view class="contact-row">
+    <text class="contact-key">城市</text>
+    <text class="contact-val">{{contact.location}}</text>
+  </view>
+</view>

@@ -1,0 +1,95 @@
+<view class="splash {{leaving ? 'is-leaving' : ''}}">
+  <view class="sky-glow"></view>
+  <view class="navigation-grid">
+    <view class="radar-ring ring-one"></view>
+    <view class="radar-ring ring-two"></view>
+    <view class="radar-ring ring-three"></view>
+    <view class="radar-sweep"></view>
+  </view>
+
+  <view class="topbar">
+    <view class="ouc-mark">
+      <text class="mark-en">OUC</text>
+      <view class="mark-rule"></view>
+      <view class="mark-copy">
+        <text>中国海洋大学</text>
+        <text>OCEAN UNIVERSITY OF CHINA</text>
+      </view>
+    </view>
+    <view class="skip" bindtap="skipIntro">
+      <text>跳过</text>
+      <text class="skip-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="mission-code">
+    <text>EXPEDITION / 03</text>
+    <text>35°35'N · 121°06'E</text>
+  </view>
+
+  <view class="ship-stage">
+    <view class="photo-aura"></view>
+    <view class="ship-fallback" wx:if="{{shipImageFailed}}">
+      <view class="fallback-horizon"></view>
+      <text class="fallback-name">东方红3号</text>
+      <text class="fallback-copy">驶向深蓝 · 探索未知</text>
+    </view>
+    <image
+      wx:else
+      class="ship-photo {{shipImageLoaded ? 'is-loaded' : ''}}"
+      src="/images/dongfanghong3-sailing.jpg"
+      mode="aspectFill"
+      bindload="onShipImageLoad"
+      binderror="onShipImageError"
+    ></image>
+    <view class="photo-shade"></view>
+    <view class="wake wake-one"></view>
+    <view class="wake wake-two"></view>
+    <view class="wake wake-three"></view>
+    <view class="ship-label">
+      <view class="label-dot"></view>
+      <text>R/V DONG FANG HONG 3</text>
+    </view>
+  </view>
+
+  <view class="hero-copy">
+    <view class="hero-kicker">
+      <view class="kicker-line"></view>
+      <text>向海图强 · 谋海济国</text>
+    </view>
+    <text class="ship-name">东方红3号</text>
+    <text class="ship-subtitle">驶向深蓝，探索未知</text>
+    <text class="ship-description">中国海洋大学新型深远海综合科学考察实习船</text>
+  </view>
+
+  <view class="telemetry">
+    <view class="telemetry-item">
+      <text class="telemetry-value">103.8</text>
+      <text class="telemetry-unit">M · 船长</text>
+    </view>
+    <view class="telemetry-divider"></view>
+    <view class="telemetry-item">
+      <text class="telemetry-value">15,000</text>
+      <text class="telemetry-unit">NM · 续航</text>
+    </view>
+    <view class="telemetry-divider"></view>
+    <view class="telemetry-item">
+      <text class="telemetry-value">60</text>
+      <text class="telemetry-unit">DAYS · 自持</text>
+    </view>
+  </view>
+
+  <view class="launch-progress">
+    <view class="progress-head">
+      <text>正在驶入海大新闻</text>
+      <text class="progress-status">VOYAGE READY</text>
+    </view>
+    <view class="progress-track">
+      <view class="progress-value"></view>
+      <view class="progress-beacon"></view>
+    </view>
+  </view>
+
+  <view class="ocean-layer ocean-back"></view>
+  <view class="ocean-layer ocean-front"></view>
+</view>

@@ -1,5 +1,10 @@
 {
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar"
+    "navigation-bar":  "/components/navigation-bar/navigation-bar",
+    "card-section":    "/components/card-section/card-section",
+    "profile-header":  "/components/profile-header/profile-header",
+    "skill-panel":     "/components/skill-panel/skill-panel",
+    "timeline-panel":  "/components/timeline-panel/timeline-panel",
+    "contact-card":    "/components/contact-card/contact-card"
   }
 }

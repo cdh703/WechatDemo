@@ -1,0 +1,605 @@
+page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #001b35;
+}
+
+.splash {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(62, 163, 197, 0.24), transparent 30%),
+    linear-gradient(165deg, #06345a 0%, #012743 42%, #00172e 72%, #000f22 100%);
+  color: #ffffff;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.splash.is-leaving {
+  opacity: 0;
+  transform: scale(1.035);
+}
+
+.sky-glow {
+  position: absolute;
+  top: -14vh;
+  right: -25vw;
+  width: 90vw;
+  height: 72vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(41, 178, 207, 0.22), transparent 68%);
+  animation: glow-breathe 4s ease-in-out infinite alternate;
+}
+
+.navigation-grid {
+  position: absolute;
+  top: 10vh;
+  right: -30vw;
+  width: 96vw;
+  height: 96vw;
+  opacity: 0;
+  animation: grid-reveal 1.2s 0.2s ease-out forwards;
+}
+
+.radar-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1rpx solid rgba(127, 213, 231, 0.12);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ring-one {
+  width: 30%;
+  height: 30%;
+}
+
+.ring-two {
+  width: 62%;
+  height: 62%;
+}
+
+.ring-three {
+  width: 94%;
+  height: 94%;
+}
+
+.radar-sweep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46%;
+  height: 1rpx;
+  background: linear-gradient(90deg, rgba(91, 208, 228, 0.55), transparent);
+  transform-origin: left center;
+  animation: radar-rotate 6s linear infinite;
+}
+
+.topbar {
+  position: absolute;
+  z-index: 20;
+  top: calc(env(safe-area-inset-top) + 30rpx);
+  right: 32rpx;
+  left: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  animation: fade-down 700ms 120ms ease-out forwards;
+}
+
+.ouc-mark {
+  display: flex;
+  height: 64rpx;
+  align-items: center;
+}
+
+.mark-en {
+  font-family: Georgia, serif;
+  font-size: 38rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.mark-rule {
+  width: 1rpx;
+  height: 46rpx;
+  margin: 0 16rpx;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.mark-copy {
+  display: flex;
+  flex-direction: column;
+  font-family: "STSong", "Songti SC", serif;
+  font-size: 21rpx;
+  line-height: 1.3;
+  letter-spacing: 2rpx;
+}
+
+.mark-copy text:last-child {
+  color: rgba(255, 255, 255, 0.52);
+  font-family: Georgia, serif;
+  font-size: 11rpx;
+  letter-spacing: 1rpx;
+}
+
+.skip {
+  display: flex;
+  height: 54rpx;
+  padding: 0 7rpx 0 20rpx;
+  align-items: center;
+  border: 1rpx solid rgba(255, 255, 255, 0.28);
+  border-radius: 28rpx;
+  background: rgba(0, 19, 39, 0.3);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 21rpx;
+}
+
+.skip-arrow {
+  width: 38rpx;
+  margin-left: 4rpx;
+  font-family: Georgia, serif;
+  font-size: 34rpx;
+  text-align: center;
+}
+
+.mission-code {
+  position: absolute;
+  z-index: 4;
+  top: 17vh;
+  left: 34rpx;
+  display: flex;
+  flex-direction: column;
+  color: rgba(151, 219, 230, 0.58);
+  font-family: Georgia, serif;
+  font-size: 17rpx;
+  line-height: 1.7;
+  letter-spacing: 3rpx;
+  opacity: 0;
+  animation: fade-right 700ms 450ms ease-out forwards;
+}
+
+.ship-stage {
+  position: absolute;
+  z-index: 5;
+  top: 22vh;
+  left: 0;
+  width: 100vw;
+  height: 38vh;
+  overflow: hidden;
+}
+
+.ship-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateX(58vw) scale(1.08);
+}
+
+.ship-photo.is-loaded {
+  animation: ship-arrival 2.25s 300ms cubic-bezier(0.16, 0.78, 0.22, 1) forwards;
+}
+
+.photo-aura {
+  position: absolute;
+  z-index: -1;
+  top: 15%;
+  right: 5%;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(65, 181, 207, 0.24), transparent 70%);
+}
+
+.ship-fallback {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 68% 28%, rgba(76, 181, 205, 0.24), transparent 28%),
+    linear-gradient(180deg, #0d5274 0%, #063855 48%, #02263f 100%);
+  flex-direction: column;
+  opacity: 0;
+  animation: fallback-reveal 700ms ease-out forwards;
+}
+
+.fallback-horizon {
+  width: 76%;
+  height: 2rpx;
+  margin-bottom: 24rpx;
+  background: linear-gradient(90deg, transparent, rgba(141, 225, 232, 0.8), transparent);
+}
+
+.fallback-name {
+  font-family: "STSong", "Songti SC", serif;
+  font-size: 48rpx;
+  font-weight: 600;
+  letter-spacing: 6rpx;
+}
+
+.fallback-copy {
+  margin-top: 12rpx;
+  color: rgba(197, 228, 234, 0.7);
+  font-size: 19rpx;
+  letter-spacing: 5rpx;
+}
+
+.photo-shade {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background:
+    linear-gradient(180deg, #012743 0%, transparent 22%, transparent 66%, #00182f 100%),
+    linear-gradient(90deg, rgba(0, 25, 48, 0.54), transparent 30%, transparent 72%, rgba(0, 23, 44, 0.42));
+  pointer-events: none;
+}
+
+.ship-label {
+  position: absolute;
+  z-index: 4;
+  right: 34rpx;
+  bottom: 28rpx;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.76);
+  font-family: Georgia, serif;
+  font-size: 15rpx;
+  letter-spacing: 3rpx;
+  opacity: 0;
+  animation: fade-left 600ms 1.75s ease-out forwards;
+}
+
+.label-dot {
+  width: 8rpx;
+  height: 8rpx;
+  margin-right: 12rpx;
+  border-radius: 50%;
+  background: #55d0dc;
+  box-shadow: 0 0 16rpx #55d0dc;
+}
+
+.wake {
+  position: absolute;
+  z-index: 3;
+  right: 54%;
+  height: 1rpx;
+  border-top: 2rpx solid rgba(223, 250, 253, 0.42);
+  border-radius: 50%;
+  opacity: 0;
+  transform-origin: right center;
+  animation: wake-open 1.5s 1.1s ease-out forwards;
+}
+
+.wake-one {
+  bottom: 23%;
+  width: 55%;
+  transform: rotate(7deg) scaleX(0);
+}
+
+.wake-two {
+  bottom: 18%;
+  width: 48%;
+  transform: rotate(2deg) scaleX(0);
+  animation-delay: 1.3s;
+}
+
+.wake-three {
+  bottom: 12%;
+  width: 38%;
+  transform: rotate(-4deg) scaleX(0);
+  animation-delay: 1.5s;
+}
+
+.hero-copy {
+  position: absolute;
+  z-index: 10;
+  top: 57vh;
+  right: 38rpx;
+  left: 38rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  color: #d3ae66;
+  font-size: 20rpx;
+  letter-spacing: 6rpx;
+  opacity: 0;
+  animation: fade-right 650ms 1.5s ease-out forwards;
+}
+
+.kicker-line {
+  width: 54rpx;
+  height: 2rpx;
+  margin-right: 16rpx;
+  background: #d3ae66;
+}
+
+.ship-name {
+  margin-top: 14rpx;
+  font-family: "STSong", "Songti SC", serif;
+  font-size: 76rpx;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: 5rpx;
+  opacity: 0;
+  text-shadow: 0 10rpx 32rpx rgba(0, 0, 0, 0.22);
+  animation: title-rise 900ms 1.72s cubic-bezier(0.18, 0.75, 0.25, 1) forwards;
+}
+
+.ship-subtitle {
+  margin-top: 7rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "STSong", "Songti SC", serif;
+  font-size: 30rpx;
+  letter-spacing: 8rpx;
+  opacity: 0;
+  animation: title-rise 700ms 2s ease-out forwards;
+}
+
+.ship-description {
+  margin-top: 18rpx;
+  color: rgba(190, 218, 228, 0.62);
+  font-size: 19rpx;
+  letter-spacing: 1rpx;
+  opacity: 0;
+  animation: title-rise 700ms 2.2s ease-out forwards;
+}
+
+.telemetry {
+  position: absolute;
+  z-index: 10;
+  right: 38rpx;
+  bottom: 15vh;
+  left: 38rpx;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  animation: title-rise 700ms 2.45s ease-out forwards;
+}
+
+.telemetry-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.telemetry-item:nth-child(3),
+.telemetry-item:nth-child(5) {
+  align-items: center;
+}
+
+.telemetry-value {
+  font-family: Georgia, serif;
+  font-size: 29rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+.telemetry-unit {
+  margin-top: 5rpx;
+  color: rgba(146, 194, 210, 0.55);
+  font-size: 14rpx;
+  letter-spacing: 2rpx;
+}
+
+.telemetry-divider {
+  width: 1rpx;
+  height: 38rpx;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.launch-progress {
+  position: absolute;
+  z-index: 12;
+  right: 38rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 48rpx);
+  left: 38rpx;
+  opacity: 0;
+  animation: title-rise 600ms 2.7s ease-out forwards;
+}
+
+.progress-head {
+  display: flex;
+  margin-bottom: 14rpx;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18rpx;
+  letter-spacing: 2rpx;
+}
+
+.progress-status {
+  color: rgba(100, 214, 222, 0.7);
+  font-family: Georgia, serif;
+  font-size: 14rpx;
+}
+
+.progress-track {
+  position: relative;
+  height: 2rpx;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.progress-value {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #b78d48, #58d5df);
+  animation: progress-load 4.1s 400ms linear forwards;
+}
+
+.progress-beacon {
+  position: absolute;
+  top: -4rpx;
+  left: 0;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: #74e4e7;
+  box-shadow: 0 0 18rpx #74e4e7;
+  animation: beacon-move 4.1s 400ms linear forwards;
+}
+
+.ocean-layer {
+  position: absolute;
+  z-index: 3;
+  right: -10vw;
+  bottom: -14vh;
+  left: -10vw;
+  height: 31vh;
+  border-radius: 50% 50% 0 0;
+  pointer-events: none;
+}
+
+.ocean-back {
+  background: rgba(5, 66, 96, 0.24);
+  transform: rotate(-4deg);
+  animation: ocean-drift 5s ease-in-out infinite alternate;
+}
+
+.ocean-front {
+  bottom: -20vh;
+  background: rgba(0, 11, 27, 0.52);
+  transform: rotate(3deg);
+  animation: ocean-drift 4s 400ms ease-in-out infinite alternate-reverse;
+}
+
+@keyframes ship-arrival {
+  0% {
+    opacity: 0;
+    transform: translateX(58vw) scale(1.08);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fallback-reveal {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes wake-open {
+  from {
+    opacity: 0;
+    transform: rotate(4deg) scaleX(0);
+  }
+  to {
+    opacity: 0.75;
+    transform: rotate(0) scaleX(1);
+  }
+}
+
+@keyframes title-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-18rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(-22rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes grid-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes radar-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progress-load {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes beacon-move {
+  to {
+    left: calc(100% - 10rpx);
+  }
+}
+
+@keyframes glow-breathe {
+  to {
+    opacity: 0.62;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes ocean-drift {
+  to {
+    transform: translateX(5vw) rotate(1deg);
+  }
+}

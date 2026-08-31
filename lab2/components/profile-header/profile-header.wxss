@@ -1,0 +1,4 @@
+/* Profile-Header 组件样式
+ * 样式沿用父级 app.wxss/index.wxss 共享（apply-shared）。
+ * 如果未来要切换 styleIsolation: isolated，可将 index.wxss 中
+ * .banner / .hero 相关规则复制到此处。*/

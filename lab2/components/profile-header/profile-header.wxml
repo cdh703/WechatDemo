@@ -1,0 +1,38 @@
+<!-- 顶部 Banner -->
+<view
+  class="banner reveal rd-0 {{bannerShown ? 'in' : ''}}"
+  id="card-0"
+  bindtap="onBannerTap"
+  hover-class="banner-hover"
+>
+  <image class="banner-img" src="{{banner}}" mode="aspectFill" show-menu-by-longpress="{{true}}" />
+  <view class="banner-mask"></view>
+
+  <view class="banner-status">
+    <view class="dot"></view>
+    <text>{{status}}</text>
+  </view>
+
+  <view class="banner-hint">
+    <text>点击查看大图</text>
+  </view>
+
+  <view class="glow glow-a"></view>
+  <view class="glow glow-b"></view>
+
+  <view class="banner-foot">
+    <text class="banner-name">{{name}}</text>
+    <text class="banner-corner">DongHan · 2026</text>
+  </view>
+</view>
+
+<!-- 姓名/简介 Hero 区 -->
+<view class="hero reveal rd-1 {{heroShown ? 'in' : ''}}" id="card-1">
+  <view class="hero-name">{{name}}</view>
+  <view class="hero-meta">
+    <text class="meta-chip">{{major}}</text>
+    <text class="meta-chip">{{degree}}</text>
+  </view>
+  <view class="hero-line"></view>
+  <view class="hero-intro">{{intro}}</view>
+</view>

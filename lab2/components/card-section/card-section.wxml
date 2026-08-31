@@ -1,0 +1,15 @@
+<view
+  class="card reveal rd-{{rd}} {{show ? 'in' : ''}}"
+  id="{{cid}}"
+  hover-class="{{hover ? 'card-hover' : ''}}"
+>
+  <!-- 仅当提供 title / no 时渲染头部 -->
+  <view class="card-head" wx:if="{{title}}">
+    <view class="card-title">
+      <text class="title-bar"></text>
+      <text>{{title}}</text>
+    </view>
+    <text class="card-no" wx:if="{{no}}">{{no}}</text>
+  </view>
+  <slot></slot>
+</view>

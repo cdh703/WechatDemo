@@ -1,0 +1,12 @@
+<view class="timeline">
+  <view wx:for="{{timeline}}" wx:key="event" class="tl-item">
+    <view class="tl-node">
+      <view class="tl-dot"></view>
+      <text class="tl-no">{{item.no}}</text>
+    </view>
+    <view class="tl-content">
+      <text class="tl-year">{{item.year}}</text>
+      <text class="tl-event">{{item.event}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,227 @@
+<view class="reading-progress" wx:if="{{!notFound}}">
+  <view class="reading-progress-value" style="width: {{readProgress}}%;"></view>
+</view>
+
+<view class="detail-page" wx:if="{{!notFound}}">
+  <view class="article-hero">
+    <view class="hero-ring ring-one"></view>
+    <view class="hero-ring ring-two"></view>
+    <view class="hero-brand-row">
+      <text class="hero-brand">OUC NEWS</text>
+      <text class="hero-category">{{article.category}}</text>
+    </view>
+    <view class="hero-rule"></view>
+    <view class="kicker" wx:if="{{article.kicker}}">{{article.kicker}}</view>
+    <view class="title">{{article.title}}</view>
+    <view class="meta-info">
+      <text wx:if="{{article.author}}">作者 {{article.author}}</text>
+      <text wx:if="{{article.source}}">来源 {{article.source}}</text>
+      <text>{{article.add_date}}</text>
+      <text>{{viewCount}} 阅读</text>
+    </view>
+  </view>
+
+  <view class="toolbar-card">
+    <button class="share-button" open-type="share">分享文章</button>
+    <view class="toolbar-divider"></view>
+    <text class="font-label">阅读字号</text>
+    <view class="font-options">
+      <text class="font-button {{fontSize === 'small' ? 'selected' : ''}}" data-size="small" bindtap="setFontSize">小</text>
+      <text class="font-button {{fontSize === 'medium' ? 'selected' : ''}}" data-size="medium" bindtap="setFontSize">中</text>
+      <text class="font-button {{fontSize === 'large' ? 'selected' : ''}}" data-size="large" bindtap="setFontSize">大</text>
+    </view>
+  </view>
+
+  <view class="article-body font-{{fontSize}}" wx:if="{{article.blocks}}">
+    <view class="content-block" wx:for="{{article.blocks}}" wx:key="id">
+      <image wx:if="{{item.image}}" class="article-image" src="{{item.image}}" mode="widthFix" bindload="updatePageMetrics"></image>
+      <view class="image-caption" wx:if="{{item.caption}}">{{item.caption}}</view>
+      <view class="paragraph" wx:for="{{item.paragraphs}}" wx:for-item="paragraph" wx:key="id">
+        <text class="lead-label" wx:if="{{paragraph.lead}}">本站讯 </text>
+        <text>{{paragraph.text}}</text>
+      </view>
+    </view>
+
+    <view class="credits" wx:if="{{article.credits}}">
+      <text wx:for="{{article.credits}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="article-body font-{{fontSize}}" wx:else>
+    <view class="poster">
+      <image src="{{article.poster}}" mode="widthFix" bindload="updatePageMetrics"></image>
+    </view>
+    <view class="paragraph">{{article.content}}</view>
+  </view>
+
+  <view class="interaction-card">
+    <view class="interaction-heading">
+      <view>
+        <text class="section-eyebrow">ENGAGE</text>
+        <text class="section-title">与海大同行</text>
+      </view>
+      <text class="interaction-tip">留下你的阅读印记</text>
+    </view>
+    <view class="article-actions">
+      <button class="action-button {{isLiked ? 'active' : ''}}" bindtap="toggleLike">
+        <text class="action-symbol">{{isLiked ? '✓' : '+'}}</text>
+        <text>{{isLiked ? '已点赞' : '点赞'}}</text>
+      </button>
+      <button wx:if="{{isFavorite}}" class="action-button active" bindtap="cancelFavorite">
+        <text class="action-symbol">✓</text><text>已收藏</text>
+      </button>
+      <button wx:else class="action-button" bindtap="addFavorite">
+        <text class="action-symbol">+</text><text>收藏</text>
+      </button>
+      <button class="action-button" bindtap="copyTitle">
+        <text class="action-symbol">↗</text><text>复制标题</text>
+      </button>
+    </view>
+  </view>
+
+  <view class="related-section section-card" wx:if="{{relatedNews.length}}">
+    <view class="section-head">
+      <view>
+        <text class="section-eyebrow">MORE STORIES</text>
+        <text class="section-title">相关推荐</text>
+      </view>
+      <text class="section-number">0{{relatedNews.length}}</text>
+    </view>
+    <view
+      class="related-item"
+      wx:for="{{relatedNews}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goToDetail"
+    >
+      <image class="related-image" src="{{item.poster}}" mode="aspectFill"></image>
+      <view class="related-copy">
+        <view class="related-topline">
+          <text class="related-category">{{item.category}}</text>
+          <text class="related-date">{{item.add_date}}</text>
+        </view>
+        <text class="related-title">{{item.title}}</text>
+        <text class="related-more">继续阅读 →</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="comment-section section-card">
+    <view class="section-head">
+      <view>
+        <text class="section-eyebrow">VOICES</text>
+        <text class="section-title">海大观点</text>
+      </view>
+      <text class="section-number">{{commentCount}}</text>
+    </view>
+
+    <view class="comment-composer" wx:if="{{userInfo.nickName}}">
+      <view class="comment-user-row">
+        <image wx:if="{{userInfo.avatarUrl}}" class="comment-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+        <view class="comment-avatar placeholder" wx:else>海</view>
+        <view class="comment-user-copy">
+          <text class="comment-nickname">{{userInfo.nickName}}</text>
+          <text class="comment-identity">海大新闻读者</text>
+        </view>
+      </view>
+      <textarea
+        class="comment-input"
+        value="{{commentText}}"
+        maxlength="200"
+        auto-height
+        placeholder="写下你的观点，与海大同行"
+        bindinput="onCommentInput"
+      ></textarea>
+      <view class="comment-submit-row">
+        <text class="comment-length">{{commentText.length}} / 200</text>
+        <button class="comment-submit" bindtap="publishComment">发布观点</button>
+      </view>
+    </view>
+
+    <view class="comment-login" wx:else bindtap="goToLogin">
+      <view>
+        <text class="login-title">登录后参与讨论</text>
+        <text class="login-tip">记录你的海大观点</text>
+      </view>
+      <text class="comment-login-action">前往登录 →</text>
+    </view>
+
+    <view class="comment-list" wx:if="{{comments.length}}">
+      <view class="comment-item" wx:for="{{comments}}" wx:for-item="comment" wx:key="id">
+        <image wx:if="{{comment.avatarUrl}}" class="comment-avatar" src="{{comment.avatarUrl}}" mode="aspectFill"></image>
+        <view class="comment-avatar placeholder" wx:else>海</view>
+        <view class="comment-main">
+          <view class="comment-meta">
+            <text class="comment-name">{{comment.nickname}}</text>
+            <text class="comment-time">{{comment.createdText}}</text>
+          </view>
+          <text class="comment-content">{{comment.content}}</text>
+
+          <view class="comment-actions">
+            <text
+              class="comment-action {{comment.isLiked ? 'active' : ''}}"
+              data-id="{{comment.id}}"
+              bindtap="toggleCommentLike"
+            >{{comment.isLiked ? '已赞' : '点赞'}} {{comment.likeCount || 0}}</text>
+            <text
+              class="comment-action"
+              data-id="{{comment.id}}"
+              data-name="{{comment.nickname}}"
+              bindtap="startReply"
+            >回复</text>
+            <text class="comment-action muted" data-id="{{comment.id}}" bindtap="removeComment">删除</text>
+          </view>
+
+          <view class="reply-composer" wx:if="{{replyingToId === comment.id}}">
+            <text class="reply-target">回复 {{replyingToName}}</text>
+            <textarea
+              class="reply-input"
+              value="{{replyText}}"
+              maxlength="160"
+              auto-height
+              focus
+              placeholder="写下你的回复"
+              bindinput="onReplyInput"
+            ></textarea>
+            <view class="reply-submit-row">
+              <text class="reply-cancel" bindtap="cancelReply">取消</text>
+              <button class="reply-submit" data-id="{{comment.id}}" bindtap="publishReply">发布回复</button>
+            </view>
+          </view>
+
+          <view class="reply-list" wx:if="{{comment.replies.length}}">
+            <view
+              class="reply-item"
+              wx:for="{{comment.replies}}"
+              wx:for-item="reply"
+              wx:key="id"
+            >
+              <view class="reply-meta">
+                <text class="reply-name">{{reply.nickname}}</text>
+                <text class="reply-to">回复 {{reply.replyToName}}</text>
+                <text class="reply-time">{{reply.createdText}}</text>
+              </view>
+              <text class="reply-content">{{reply.content}}</text>
+              <text
+                class="reply-delete"
+                data-comment-id="{{comment.id}}"
+                data-reply-id="{{reply.id}}"
+                bindtap="removeReply"
+              >删除回复</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="comment-empty" wx:else>暂时没有观点，期待你的第一条留言</view>
+  </view>
+
+  <view class="story-end">
+    <text class="story-end-mark">OUC</text>
+    <text class="story-end-copy">海纳百川 · 取则行远</text>
+  </view>
+
+  <view class="back-top" wx:if="{{showBackTop}}" bindtap="backToTop">TOP</view>
+</view>
+
+<view class="empty-state" wx:else>没有找到这篇新闻</view>

@@ -1,0 +1,17 @@
+<view class="skill-list">
+  <view wx:for="{{skills}}" wx:key="name" class="skill-item">
+    <view class="skill-top">
+      <text class="skill-name">{{item.name}}</text>
+      <view class="skill-right">
+        <text class="skill-level lv-{{item.cls}}">{{item.level}}</text>
+        <text class="skill-pct">{{item.pct}}%</text>
+      </view>
+    </view>
+    <view class="skill-bar">
+      <view
+        class="skill-fill lv-{{item.cls}}"
+        style="width: {{animateIn ? item.pct : 0}}%; transition-delay: {{index * 120}}ms;"
+      ></view>
+    </view>
+  </view>
+</view>

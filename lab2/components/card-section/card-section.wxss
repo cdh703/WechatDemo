@@ -1,0 +1,4 @@
+/* card-section 组件样式
+ * 由于 styleIsolation: apply-shared，
+ * 父级 app.wxss 中的 .card / .card-head / .card-hover / .title-bar 等会共享进来，
+ * 这里仅补充组件特有的差异样式（如无差异可留空）*/
