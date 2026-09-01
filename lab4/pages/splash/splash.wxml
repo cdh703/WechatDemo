@@ -1,0 +1,12 @@
+<view class="splash">
+  <image class="scene" src="/images/splash-scene.png" mode="aspectFill"></image>
+  <view class="shade"></view>
+  <view class="headline"><text>鸟鸟推箱子</text><text>SLINGSHOT SOKOBAN</text></view>
+  <view class="selector">
+    <view class="birdChoice {{item.id === selectedId ? 'active' : ''}}" wx:for="{{birds}}" wx:key="id" bindtap="selectBird" data-id="{{item.id}}">
+      <view class="birdHalo" style="background: {{item.color}}"><image src="{{item.icon}}" mode="aspectFit"></image></view>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+  <button class="enter" bindtap="enterGame">进入选关</button>
+</view>

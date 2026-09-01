@@ -1,0 +1,54 @@
+<view class="page-shell" style="padding-top: {{contentTop}}px">
+  <view class="grid-backdrop"></view>
+  <view class="hud">
+    <view class="title-row">
+      <button class="back" bindtap="backToLevels">返回选关</button>
+      <text class="title">第{{level}}关</text>
+      <view class="bird-chip">
+        <image src="{{birdIcon}}" mode="aspectFit"></image>
+        <text>{{birdName}}</text>
+      </view>
+    </view>
+    <view class="stats-row">
+      <view class="stat-card">
+        <text class="stat-label">当前步数</text>
+        <text class="stat-value">{{steps}}</text>
+      </view>
+      <view class="stat-card best">
+        <text class="stat-label">最佳步数</text>
+        <text class="stat-value">{{bestSteps}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="board-card">
+    <canvas canvas-id="myCanvas" class="gameCanvas" width="320" height="320"></canvas>
+  </view>
+
+  <view class="ctrl-panel">
+    <view class="control-key arrow" bindtap="up" hover-class="control-pressed">↑</view>
+    <view class="mid-row">
+      <view class="control-key arrow" bindtap="left" hover-class="control-pressed">←</view>
+      <view class="control-key restart" bindtap="restartGame" hover-class="restart-pressed">重开</view>
+      <view class="control-key arrow" bindtap="right" hover-class="control-pressed">→</view>
+    </view>
+    <view class="control-key arrow" bindtap="down" hover-class="control-pressed">↓</view>
+  </view>
+
+  <view class="effect-trigger" bindtap="triggerBirdEffect" hover-class="effect-trigger-pressed">
+    <image src="{{birdIcon}}" mode="aspectFit"></image>
+    <text class="effect-star">✦</text>
+    <text>释放特效</text>
+  </view>
+
+  <view wx:if="{{effectVisible}}" class="effect-stage effect-{{birdId}}">
+    <view class="effect-ring ring-one"></view>
+    <view class="effect-ring ring-two"></view>
+    <view class="effect-slash slash-one"></view>
+    <view class="effect-slash slash-two"></view>
+    <view class="effect-core">
+      <image class="effect-bird" src="{{birdIcon}}" mode="aspectFit"></image>
+      <text class="effect-word">{{effectWord}}</text>
+    </view>
+  </view>
+</view>

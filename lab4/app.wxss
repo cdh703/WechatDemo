@@ -1,0 +1,15 @@
+/**app.wxss**/
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+  color: #333333;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 46rpx 0 30rpx;
+  font-size: 38rpx;
+}

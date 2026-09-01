@@ -1,0 +1,30 @@
+<view class="page-shell" style="padding-top: {{contentTop}}px">
+  <view class="grid-backdrop"></view>
+  <view class="home-button" style="top: {{homeButtonTop}}px; height: {{homeButtonHeight}}px" bindtap="backHome">
+    <text class="home-arrow">‹</text>
+    <text class="home-text">主页</text>
+  </view>
+  <view class="bird-switcher" style="top: {{switcherTop}}px">
+    <text class="switcher-label">切换小鸟</text>
+    <view class="bird-options">
+      <view class="bird-option {{item.id === currentBird.id ? 'active' : ''}}" wx:for="{{birds}}" wx:key="id" bindtap="chooseBird" data-id="{{item.id}}">
+        <image src="{{item.icon}}" mode="aspectFit"></image>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="masthead">
+    <view class="title-row">
+      <text class="title">选择关卡</text>
+    </view>
+    <text class="subtitle">选择下方四个原始关卡之一</text>
+  </view>
+
+  <view class="level-grid">
+    <view class="level-card" wx:for="{{levels}}" wx:key="name" bindtap="chooseLevel" data-level="{{index}}">
+      <canvas canvas-id="preview-{{index}}" class="previewCanvas" width="160" height="160"></canvas>
+      <text class="level-name">{{item.name}}</text>
+    </view>
+  </view>
+</view>
