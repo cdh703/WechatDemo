@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/add/add",
+    "pages/homepage/homepage",
+    "pages/detail/detail",
+    "pages/favorite/favorite",
+    "pages/category/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "拾光社区",
+    "navigationBarBackgroundColor": "#f7f8fc",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f8fc",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "requiredBackgroundModes": ["audio"],
+  "sitemapLocation": "sitemap.json"
+}

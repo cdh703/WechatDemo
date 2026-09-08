@@ -1,0 +1,22 @@
+<view class="page-shell favorite-page">
+  <view class="heading">
+    <text class="eyebrow">MY COLLECTION</text>
+    <text class="page-title">我的收藏</text>
+    <text class="muted">把喜欢的瞬间放在一起</text>
+  </view>
+
+  <view class="favorite-grid" wx:if="{{photos.length}}">
+    <view class="favorite-card glass-card" wx:for="{{photos}}" wx:key="_id" data-id="{{item._id}}" bindtap="openDetail">
+      <image src="{{item.photoUrl}}" mode="aspectFill" />
+      <view class="favorite-copy"><text>{{item.title}}</text><text class="muted">{{item.nickName}}</text></view>
+    </view>
+  </view>
+
+  <view class="empty glass-card" wx:if="{{!loading && photos.length === 0}}">
+    <text class="empty-icon">☆</text>
+    <text class="empty-title">收藏夹还是空的</text>
+    <text class="muted">在图片详情页点击星标即可收藏</text>
+    <button class="primary-button" bindtap="goDiscover">去发现作品</button>
+  </view>
+  <view class="loading" wx:if="{{loading}}">正在读取收藏…</view>
+</view>

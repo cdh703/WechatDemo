@@ -1,0 +1,6 @@
+<view class="category-page">
+  <view class="category-head"><text class="eyebrow">PRIVATE ALBUM</text><text class="page-title">{{type}}相册</text><text class="muted">共 {{count}} 张 · 仅展示当前微信 ID 的作品</text></view>
+  <view class="photo-grid" wx:if="{{items.length}}"><view class="photo-item" wx:for="{{items}}" wx:key="_id" data-index="{{index}}" data-url="{{item.photoUrl}}" bindtap="preview" bindlongpress="deletePhoto"><image src="{{item.photoUrl}}" mode="aspectFill" /><view class="photo-label">{{item.title}}</view></view></view>
+  <view class="empty" wx:elif="{{!loading}}">这个分类还没有照片</view><view class="loading" wx:if="{{loading}}">正在加载云端照片…</view>
+  <button class="upload-button" bindtap="chooseAndUpload">＋ 上传到此分类</button>
+</view>

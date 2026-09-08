@@ -1,0 +1,33 @@
+page { background: #f5f7ff; }
+.login-page { position: relative; min-height: 100vh; padding: 240rpx 42rpx 80rpx; box-sizing: border-box; overflow: hidden; }
+.light { position: absolute; width: 520rpx; height: 520rpx; border-radius: 50%; filter: blur(8rpx); opacity: .55; }
+.light-one { top: -180rpx; right: -230rpx; background: #aaaaff; }
+.light-two { bottom: -260rpx; left: -280rpx; background: #bcebe4; }
+.login-card { position: relative; z-index: 1; padding: 48rpx 38rpx 42rpx; border: 2rpx solid rgba(255,255,255,.9); border-radius: 42rpx; background: rgba(255,255,255,.9); box-shadow: 0 28rpx 80rpx rgba(49,57,102,.13); }
+.brand-row { display: flex; align-items: center; margin-bottom: 42rpx; }
+.logo-mark { width: 78rpx; height: 78rpx; line-height: 78rpx; margin-right: 20rpx; border-radius: 25rpx; color: #fff; background: linear-gradient(135deg,#7779f6,#5759df); text-align: center; font-size: 39rpx; box-shadow: 0 14rpx 28rpx rgba(91,92,240,.28); }
+.brand-copy { display: flex; flex-direction: column; gap: 6rpx; }
+.brand-name { color: #273149; font-size: 30rpx; font-weight: 750; }
+.eyebrow { display: block; color: #696cec; font-size: 21rpx; font-weight: 700; letter-spacing: 4rpx; }
+.title { display: block; color: #1f293b; font-size: 43rpx; line-height: 1.32; font-weight: 800; }
+.subtitle { display: block; margin-top: 22rpx; color: #7b8497; font-size: 27rpx; line-height: 1.7; }
+.identity-card { display: flex; align-items: center; margin-top: 38rpx; padding: 22rpx; border: 2rpx solid #ececff; border-radius: 25rpx; background: #f7f7ff; }
+.identity-icon { width: 64rpx; height: 64rpx; line-height: 64rpx; margin-right: 18rpx; border-radius: 20rpx; color: #fff; background: #5b5cf0; font-size: 20rpx; font-weight: 800; text-align: center; }
+.identity-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6rpx; }
+.identity-title { color: #313a54; font-size: 25rpx; font-weight: 700; }
+.identity-state { color: #8b93a8; font-size: 21rpx; }
+.identity-mask { color: #686be8; font-size: 20rpx; font-family: monospace; }
+.welcome-actions { margin-top: 38rpx; }
+.wechat-button { height: 92rpx; line-height: 92rpx; padding: 0; border-radius: 26rpx; color: #fff; background: linear-gradient(135deg,#5d60f1,#7779f6); font-size: 29rpx; font-weight: 650; box-shadow: 0 15rpx 34rpx rgba(91,92,240,.24); }
+.wechat-button::after, .avatar-picker::after { border: none; }
+.button-dot { margin-right: 8rpx; color: #c0f4df; font-size: 20rpx; }
+.privacy-tip { display: block; margin-top: 24rpx; color: #a0a6b3; font-size: 22rpx; line-height: 1.6; text-align: center; }
+.setup-form { margin-top: 42rpx; }
+.setup-title { display: block; margin-bottom: 30rpx; color: #30384a; font-size: 29rpx; font-weight: 700; }
+.setup-tip { display: block; margin: -16rpx 0 26rpx; color: #9299a9; font-size: 22rpx; line-height: 1.5; }
+.avatar-picker { display: flex; align-items: center; height: 112rpx; margin-bottom: 26rpx; padding: 0 20rpx; color: #666fea; background: #f2f3ff; border-radius: 24rpx; font-size: 25rpx; }
+.avatar-picker image { width: 78rpx; height: 78rpx; margin-right: 20rpx; border-radius: 50%; background: #e4e7ef; }
+.field { margin-bottom: 22rpx; }
+.field text { display: block; margin: 0 0 10rpx 6rpx; color: #656e80; font-size: 23rpx; }
+.field input { height: 84rpx; padding: 0 24rpx; border: 2rpx solid #e8eaf1; border-radius: 22rpx; color: #2f3748; background: #fbfbfd; font-size: 27rpx; box-sizing: border-box; }
+.setup-form .wechat-button { margin-top: 36rpx; }

@@ -1,0 +1,27 @@
+.heading { margin: 10rpx 4rpx 30rpx; }
+.eyebrow { display: block; color: #6d70e8; font-size: 20rpx; font-weight: 700; letter-spacing: 3rpx; }
+.page-title { display: block; margin: 6rpx 0 8rpx; font-size: 48rpx; font-weight: 800; }
+.upload-card { position: relative; height: 520rpx; overflow: hidden; border: 2rpx dashed rgba(91,92,240,.25); }
+.preview { width: 100%; height: 100%; }
+.upload-empty { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12rpx; }
+.upload-icon { width: 100rpx; height: 100rpx; line-height: 94rpx; text-align: center; color: #fff; font-size: 60rpx; border-radius: 32rpx; background: linear-gradient(135deg,#5b5cf0,#9b63ed); }
+.upload-title { margin-top: 12rpx; font-size: 31rpx; font-weight: 700; }
+.replace-badge { position: absolute; right: 22rpx; bottom: 22rpx; padding: 12rpx 20rpx; color: #fff; font-size: 22rpx; border-radius: 28rpx; background: rgba(16,24,40,.72); }
+.form-card { margin-top: 24rpx; padding: 10rpx 28rpx; }
+.field { position: relative; padding: 24rpx 0; }
+.field + .field { border-top: 1rpx solid #edf0f5; }
+.label { display: block; margin-bottom: 14rpx; color: #343e52; font-size: 25rpx; font-weight: 650; }
+textarea { width: 100%; height: 130rpx; font-size: 28rpx; }
+.counter { position: absolute; right: 0; bottom: 20rpx; color: #a0a7b6; font-size: 20rpx; }
+.line-field { display: flex; align-items: center; }
+.line-field .label { width: 110rpx; margin: 0; }
+.line-field picker, .line-field input { flex: 1; text-align: right; font-size: 27rpx; }
+.picker-value { color: #5b5cf0; }
+.publish-button { margin-top: 28rpx; }
+.progress { position: relative; height: 56rpx; margin-top: 20rpx; overflow: hidden; border-radius: 18rpx; background: #e9ebf3; text-align: center; line-height: 56rpx; font-size: 22rpx; }
+.progress-bar { position: absolute; inset: 0 auto 0 0; background: rgba(91,92,240,.24); transition: width .2s; }
+.progress text { position: relative; z-index: 1; }
+.history { margin-top: 42rpx; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18rpx; }
+.history-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10rpx; }
+.history-image { width: 100%; height: 200rpx; border-radius: 18rpx; background: #e8eaf0; }

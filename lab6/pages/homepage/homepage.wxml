@@ -1,0 +1,47 @@
+<view class="profile-hero">
+  <view class="hero-orb orb-one"></view><view class="hero-orb orb-two"></view>
+  <image class="profile-avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
+  <text class="profile-name">{{profile.nickName}}</text>
+  <text class="profile-location">⌖ {{profile.province || '未知地区'}} · {{profile.country || '中国'}}</text>
+  <text class="profile-bio">{{profile.bio}}</text>
+  <button wx:if="{{!viewingOther}}" class="edit-button" bindtap="startEdit">编辑资料</button>
+</view>
+
+<view class="page-shell profile-content">
+  <view class="stats glass-card">
+    <view class="stat"><text class="stat-number">{{photos.length}}</text><text class="stat-label">作品</text></view>
+    <view class="stat"><text class="stat-number">{{likedCount}}</text><text class="stat-label">点赞</text></view>
+    <view class="stat" bindtap="goFavorite"><text class="stat-number">{{favoriteCount}}</text><text class="stat-label">收藏 ›</text></view>
+  </view>
+
+  <view class="works-head">
+    <text class="section-title">{{viewingOther ? 'TA 的作品' : '我的作品'}}</text>
+    <text class="muted">云端相册</text>
+  </view>
+  <view class="works-grid">
+    <view class="work-item" wx:for="{{photos}}" wx:key="_id" data-id="{{item._id}}" bindtap="openDetail">
+      <image src="{{item.photoUrl}}" mode="aspectFill" lazy-load />
+      <view class="work-overlay"><text>{{item.category}}</text><text>♡ {{item.likeCount}}</text></view>
+    </view>
+  </view>
+  <view class="empty-work glass-card" wx:if="{{photos.length === 0}}">还没有发布作品，去记录第一束光吧。</view>
+</view>
+
+<view class="modal-mask" wx:if="{{editing}}" bindtap="closeEdit">
+  <view class="edit-sheet" catchtap="noop">
+    <view class="edit-head"><text class="section-title">编辑个人资料</text><text class="close" bindtap="closeEdit">×</text></view>
+    <button class="avatar-picker" open-type="chooseAvatar" bindchooseavatar="onAvatarChoose">
+      <image src="{{draft.avatarUrl}}" mode="aspectFill" /><text>更换头像</text>
+    </button>
+    <view class="edit-field"><text>昵称</text><input type="nickname" value="{{draft.nickName}}" bindinput="onNicknameInput" /></view>
+    <view class="edit-field"><text>个人简介</text><input maxlength="40" value="{{draft.bio}}" bindinput="onBioInput" /></view>
+    <view class="edit-field"><text>所在地区</text><input maxlength="12" value="{{draft.province}}" bindinput="onProvinceInput" /></view>
+    <button class="primary-button" bindtap="saveEdit">保存资料</button>
+  </view>
+</view>
+
+<view class="bottom-nav" wx:if="{{!viewingOther}}">
+  <view class="nav-item" bindtap="goDiscover"><text class="nav-icon">⌂</text>发现</view>
+  <view class="nav-item" bindtap="goAdd"><text class="nav-icon">＋</text>发布</view>
+  <view class="nav-item active"><text class="nav-icon">◎</text>我的</view>
+</view>

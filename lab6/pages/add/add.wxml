@@ -1,0 +1,66 @@
+<view class="page-shell add-page">
+  <view class="heading">
+    <text class="eyebrow">CREATE A MEMORY</text>
+    <text class="page-title">发布新作品</text>
+    <text class="muted">把这一刻分享给更多人</text>
+  </view>
+
+  <view class="upload-card glass-card" bindtap="chooseImage">
+    <image wx:if="{{tempFilePath}}" class="preview" src="{{tempFilePath}}" mode="aspectFill" />
+    <view wx:else class="upload-empty">
+      <view class="upload-icon">＋</view>
+      <text class="upload-title">选择一张照片</text>
+      <text class="muted">支持相册或相机拍摄</text>
+    </view>
+    <view wx:if="{{tempFilePath}}" class="replace-badge">更换照片</view>
+  </view>
+
+  <view class="form-card glass-card">
+    <view class="field">
+      <text class="label">作品标题</text>
+      <input maxlength="30" placeholder="给这张照片起个名字" value="{{title}}" bindinput="onTitleInput" />
+    </view>
+    <view class="field">
+      <text class="label">照片故事</text>
+      <textarea maxlength="160" placeholder="分享一下这一刻…" value="{{description}}" bindinput="onDescriptionInput" />
+      <text class="counter">{{description.length}} / 160</text>
+    </view>
+    <view class="field line-field">
+      <text class="label">分类</text>
+      <picker mode="selector" range="{{categories}}" bindchange="onCategoryChange">
+        <view class="picker-value">{{category}} 〉</view>
+      </picker>
+    </view>
+    <view class="field line-field">
+      <text class="label">标签</text>
+      <input maxlength="40" placeholder="旅行, 日落（最多5个）" value="{{tagsText}}" bindinput="onTagsInput" />
+    </view>
+    <view class="field line-field">
+      <text class="label">位置</text>
+      <input maxlength="20" placeholder="例如：青岛" value="{{city}}" bindinput="onCityInput" />
+    </view>
+    <view class="field line-field">
+      <text class="label">允许评论</text>
+      <switch color="#5b5cf0" checked="{{allowComment}}" bindchange="onAllowCommentChange" />
+    </view>
+  </view>
+
+  <view class="progress" wx:if="{{uploading}}">
+    <view class="progress-bar" style="width: {{progress}}%"></view>
+    <text>正在上传 {{progress}}%</text>
+  </view>
+  <button class="primary-button publish-button" loading="{{uploading}}" bindtap="publish">{{uploading ? '正在发布' : '发布到拾光社区'}}</button>
+
+  <view class="history" wx:if="{{historyPhotos.length}}">
+    <view class="section-head"><text class="section-title">最近上传</text><text class="muted">{{historyPhotos.length}} 张</text></view>
+    <view class="history-grid">
+      <image wx:for="{{historyPhotos}}" wx:key="_id" class="history-image" src="{{item.photoUrl}}" mode="aspectFill" data-id="{{item._id}}" bindtap="openDetail" />
+    </view>
+  </view>
+</view>
+
+<view class="bottom-nav">
+  <view class="nav-item" bindtap="goDiscover"><text class="nav-icon">⌂</text>发现</view>
+  <view class="nav-item active"><text class="nav-icon">＋</text>发布</view>
+  <view class="nav-item" bindtap="goHome"><text class="nav-icon">◎</text>我的</view>
+</view>

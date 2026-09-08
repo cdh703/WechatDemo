@@ -1,0 +1,38 @@
+<view class="login-page">
+  <view class="light light-one"></view>
+  <view class="light light-two"></view>
+
+  <view class="login-card">
+    <view class="brand-row"><view class="logo-mark">◉</view><view class="brand-copy"><text class="eyebrow">CLOUD PHOTO LAB</text><text class="brand-name">拾光社区</text></view></view>
+    <text class="title">用微信 ID，记录你的每一束光</text>
+    <text class="subtitle">每个微信账号拥有独立身份，作品、评论、点赞和收藏都会自动归属于你。</text>
+    <view class="identity-card"><view class="identity-icon">ID</view><view class="identity-copy"><text class="identity-title">微信身份登录</text><text class="identity-state">{{identityState}}</text></view><text class="identity-mask" wx:if="{{openidMask}}">{{openidMask}}</text></view>
+
+    <view wx:if="{{!showSetup}}" class="welcome-actions">
+      <button class="wechat-button" loading="{{checking}}" bindtap="loginWithWechat"><text class="button-dot">●</text> 使用当前微信身份登录</button>
+      <text class="privacy-tip">无需手机号 · 无需验证码 · 不展示完整 ID</text>
+    </view>
+
+    <view wx:else class="setup-form">
+      <text class="setup-title">身份已绑定，完善你的社区资料</text>
+      <text class="setup-tip">资料只与当前微信 ID 绑定，换账号会自动使用另一份资料。</text>
+      <button class="avatar-picker" open-type="chooseAvatar" bindchooseavatar="chooseAvatar">
+        <image src="{{avatarUrl}}" mode="aspectFill" />
+        <text>选择头像</text>
+      </button>
+      <view class="field">
+        <text>昵称</text>
+        <input type="nickname" maxlength="20" placeholder="你的社区昵称" value="{{nickName}}" bindinput="inputNickname" />
+      </view>
+      <view class="field">
+        <text>所在地区</text>
+        <input maxlength="12" placeholder="例如：青岛" value="{{province}}" bindinput="inputProvince" />
+      </view>
+      <view class="field">
+        <text>个人简介</text>
+        <input maxlength="40" placeholder="介绍一下自己" value="{{bio}}" bindinput="inputBio" />
+      </view>
+      <button class="wechat-button" loading="{{checking}}" bindtap="completeProfile">保存资料并进入社区</button>
+    </view>
+  </view>
+</view>

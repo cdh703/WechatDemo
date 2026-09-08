@@ -1,0 +1,85 @@
+<view class="detail-page" wx:if="{{photo}}">
+  <view class="image-stage" bindtap="previewPhoto">
+    <image class="detail-image" src="{{photo.photoUrl}}" mode="widthFix" />
+    <view class="preview-tip">点击全屏预览</view>
+  </view>
+
+  <view class="detail-sheet">
+    <view class="category-row">
+      <text class="category">{{photo.category}}</text>
+      <text class="date">{{photo.addDate}} · {{photo.viewCount || 0}} 次浏览</text>
+    </view>
+    <view class="photo-title">{{photo.title}}</view>
+    <view class="description" wx:if="{{photo.description}}">{{photo.description}}</view>
+    <view class="tag-row">
+      <text class="tag" wx:for="{{photo.tags}}" wx:key="*this"># {{item}}</text>
+    </view>
+
+    <view class="author-card" bindtap="openAuthor">
+      <image class="author-avatar" src="{{photo.avatarUrl}}" mode="aspectFill" />
+      <view class="author-copy">
+        <text class="author-name">{{photo.nickName}}</text>
+        <text class="author-place">{{photo.province}} · {{photo.country}}</text>
+      </view>
+      <text class="chevron">›</text>
+    </view>
+
+    <view class="action-grid">
+      <button class="action {{liked ? 'selected' : ''}}" bindtap="toggleLike"><text class="action-icon">{{liked ? '♥' : '♡'}}</text><text>{{displayLikes}}</text></button>
+      <button class="action {{favorited ? 'selected' : ''}}" bindtap="toggleFavorite"><text class="action-icon">{{favorited ? '★' : '☆'}}</text><text>{{displayFavorites}} 收藏</text></button>
+      <button class="action" bindtap="downloadPhoto"><text class="action-icon">⇩</text><text>下载</text></button>
+      <button class="action" open-type="share"><text class="action-icon">↗</text><text>分享</text></button>
+    </view>
+
+    <view class="comments-block" wx:if="{{photo.allowComment !== false}}">
+      <view class="comments-head"><text class="section-title">评论</text><text class="muted">{{commentTotal}} 条</text></view>
+      <view class="replying-tip" wx:if="{{replyTarget}}"><text>正在回复 @{{replyTarget.nickName}}</text><text bindtap="cancelReply">取消</text></view>
+      <view class="comment-compose glass-card">
+        <input maxlength="120" placeholder="{{commentPlaceholder}}" value="{{commentContent}}" bindinput="onCommentInput" confirm-type="send" bindconfirm="sendComment" focus="{{replyTarget !== null}}" />
+        <button loading="{{sendingComment}}" bindtap="sendComment">发送</button>
+      </view>
+
+      <view class="comment-thread" wx:for="{{comments}}" wx:key="_id" wx:for-item="comment">
+        <view class="comment">
+          <image src="{{comment.avatarUrl || '/assets/images/avatar-default.png'}}" mode="aspectFill" />
+          <view class="comment-main">
+            <view><text class="comment-name">{{comment.nickName}}</text><text class="comment-time">{{comment.displayTime}}</text></view>
+            <text class="comment-text">{{comment.content}}</text>
+            <view class="comment-actions">
+              <text data-commentid="{{comment._id}}" data-rootid="{{comment._id}}" data-nickname="{{comment.nickName}}" bindtap="startReply">回复</text>
+              <text class="comment-like {{comment.liked ? 'selected' : ''}}" data-id="{{comment._id}}" bindtap="toggleCommentLike">{{comment.liked ? '♥' : '♡'}} {{comment.likeCount || 0}}</text>
+              <text wx:if="{{comment.isMine}}" class="comment-delete" data-id="{{comment._id}}" data-rootid="" bindtap="deleteComment">删除</text>
+            </view>
+
+            <view class="reply-list" wx:if="{{comment.replies.length}}">
+              <view class="reply" wx:for="{{comment.replies}}" wx:key="_id" wx:for-item="reply">
+                <image src="{{reply.avatarUrl || '/assets/images/avatar-default.png'}}" mode="aspectFill" />
+                <view class="reply-main">
+                  <view><text class="comment-name">{{reply.nickName}}</text><text class="reply-to"> 回复 @{{reply.replyToNickName}}</text></view>
+                  <text class="comment-text">{{reply.content}}</text>
+                  <view class="comment-actions">
+                    <text data-commentid="{{reply._id}}" data-rootid="{{comment._id}}" data-nickname="{{reply.nickName}}" bindtap="startReply">回复</text>
+                    <text class="comment-like {{reply.liked ? 'selected' : ''}}" data-id="{{reply._id}}" bindtap="toggleCommentLike">{{reply.liked ? '♥' : '♡'}} {{reply.likeCount || 0}}</text>
+                    <text wx:if="{{reply.isMine}}" class="comment-delete" data-id="{{reply._id}}" data-rootid="{{comment._id}}" bindtap="deleteComment">删除</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="comment-empty" wx:if="{{comments.length === 0}}">还没有评论，来做第一个留言的人吧。</view>
+    </view>
+
+    <view class="note glass-card">
+      <text class="note-title">作品信息</text>
+      <view class="note-row"><text>上传时间</text><text>{{photo.addDate}}</text></view>
+      <view class="note-row"><text>内容分类</text><text>{{photo.category}}</text></view>
+      <view class="note-row"><text>存储位置</text><text>{{photo.isDemo ? '本地演示资源' : '微信云存储'}}</text></view>
+      <view class="note-row" wx:if="{{!photo.isDemo}}"><text>浏览次数</text><text>{{photo.viewCount || 0}}</text></view>
+    </view>
+    <button wx:if="{{isOwner}}" class="delete-button" bindtap="deletePhoto">删除这张作品</button>
+  </view>
+</view>
+
+<view class="loading-state" wx:if="{{loading}}">正在载入照片…</view>

@@ -1,0 +1,100 @@
+<view class="page-shell home-page">
+  <view class="topbar">
+    <view>
+      <text class="eyebrow">CLOUD PHOTO LAB</text>
+      <view class="brand">拾光社区</view>
+      <text class="signed-user">你好，{{userName}}</text>
+    </view>
+    <view class="topbar-right">
+      <view class="music-box">
+        <view class="music-disc {{musicPlaying ? 'spinning' : ''}}" bindtap="toggleMusic">♪</view>
+        <text class="music-name" bindtap="toggleMusic">{{musicTitle}}</text>
+        <text class="music-next" bindtap="nextSong">»</text>
+        <text class="music-list-btn" bindtap="toggleMusicPanel">≡</text>
+      </view>
+      <view class="avatar-button" bindtap="goHome" hover-class="avatar-button-hover">
+        <image class="top-avatar" src="{{userAvatar}}" mode="aspectFill" />
+      </view>
+    </view>
+  </view>
+
+  <view class="music-panel glass-card" wx:if="{{musicOpen}}">
+    <view class="music-item {{musicIndex === index ? 'active' : ''}}" wx:for="{{playlist}}" wx:key="title" data-index="{{index}}" bindtap="chooseSong">
+      <text class="music-item-name">{{musicIndex === index && musicPlaying ? '♪ ' : ''}}{{item.title}}</text>
+      <text class="muted">{{item.singer}}</text>
+    </view>
+  </view>
+
+  <view class="notice-bar">
+    <view class="notice-track">◆ 社区公约：禁止发布违规内容，图片与评论发布前均经过微信内容安全检测，违规内容将被自动清理　　◆ 社区公约：禁止发布违规内容，图片与评论发布前均经过微信内容安全检测，违规内容将被自动清理　　</view>
+  </view>
+
+  <view class="hero glass-card" wx:if="{{featured}}" data-id="{{featured._id}}" bindtap="openDetail">
+    <image class="hero-image" src="{{featured.photoUrl}}" mode="aspectFill" />
+    <view class="hero-shade"></view>
+    <view class="hero-copy">
+      <text class="hero-label">今日精选 · {{featured.category}}</text>
+      <text class="hero-title">{{featured.title}}</text>
+      <text class="hero-meta">来自 {{featured.nickName}} · ♡ {{featured.likeCount}}</text>
+    </view>
+  </view>
+
+  <view class="search-row">
+    <view class="search-box">
+      <text class="search-icon">⌕</text>
+      <input placeholder="搜索作品、作者或标签" placeholder-class="search-placeholder" value="{{keyword}}" bindinput="onSearch" />
+    </view>
+    <button class="upload-shortcut" bindtap="goAdd">＋</button>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x enable-flex>
+    <view class="category-list">
+      <view wx:for="{{categories}}" wx:key="*this" class="category-pill {{activeCategory === item ? 'active' : ''}}" data-category="{{item}}" bindtap="chooseCategory">{{item}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="section-head">
+    <text class="section-title">{{sortMode === 'hot' ? '热门作品' : '最新作品'}}</text>
+    <view class="section-actions">
+      <view class="sort-switch"><text class="sort-option {{sortMode === 'new' ? 'active' : ''}}" data-mode="new" bindtap="switchSort">最新</text><text class="sort-option {{sortMode === 'hot' ? 'active' : ''}}" data-mode="hot" bindtap="switchSort">最热</text></view>
+      <text class="result-count">{{visiblePhotos.length}} 张</text>
+      <text class="category-link" bindtap="goCategoryManager">分类相册 ›</text>
+    </view>
+  </view>
+
+  <view class="skeleton-grid" wx:if="{{loading}}">
+    <view class="skeleton" wx:for="{{skeletons}}" wx:key="*this"></view>
+  </view>
+
+  <view class="photo-grid" wx:else>
+    <view class="photo-card glass-card" wx:for="{{visiblePhotos}}" wx:key="_id" data-id="{{item._id}}" bindtap="openDetail">
+      <image class="card-image" src="{{item.photoUrl}}" mode="aspectFill" lazy-load />
+      <view class="card-content">
+        <text class="card-title">{{item.title}}</text>
+        <view class="author-row">
+          <view class="author-info" catchtap="openAuthor" data-openid="{{item._openid}}" data-nickname="{{item.nickName}}">
+            <image class="mini-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+            <text class="author-name">{{item.nickName}}</text>
+          </view>
+          <text class="view-count">◉ {{item.viewCount || 0}}</text>
+          <text class="comment-count">◌ {{item.commentCount || 0}}</text>
+          <text class="like-count">♡ {{item.likeCount}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty glass-card" wx:if="{{!loading && visiblePhotos.length === 0}}">
+    <text class="empty-icon">◌</text>
+    <text class="empty-title">没有找到相关作品</text>
+    <text class="muted">换个关键词或分类试试看</text>
+  </view>
+  <view class="load-more" wx:if="{{loadingMore}}">正在加载更多作品…</view>
+  <view class="load-more" wx:if="{{!loading && !hasMore && visiblePhotos.length}}">— 已经看到全部作品 —</view>
+</view>
+
+<view class="bottom-nav">
+  <view class="nav-item active"><text class="nav-icon">⌂</text>发现</view>
+  <view class="nav-item" bindtap="goAdd"><text class="nav-icon">＋</text>发布</view>
+  <view class="nav-item" bindtap="goHome"><text class="nav-icon">◎</text>我的</view>
+</view>
